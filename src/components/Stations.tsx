@@ -19,7 +19,7 @@ const Stations: React.FC = () => {
             }, 
         })
             .then(response => response.json())
-            .then(data => data.numberOfChildren)
+            .then(data => data.outboundJourneys[0].tickets[0].priceInPennies)
             .then(value => alert(value))
             .then(() => alert(url))
             .catch(error => {

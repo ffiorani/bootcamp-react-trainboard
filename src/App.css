@@ -59,3 +59,8 @@
 .button {
   height: auto;
 }
+
+.scrollable-ul {
+  overflow-y: auto;
+  height: 60px;
+}

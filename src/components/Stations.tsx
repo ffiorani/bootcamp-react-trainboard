@@ -19,14 +19,25 @@ const Stations: React.FC = () => {
             }, 
         })
             .then(response => response.json())
-            .then(data => data.outboundJourneys[0].tickets[0].priceInPennies)
-            .then(value => alert(value))
-            .then(() => alert(url))
+            .then(data => data.outboundJourneys[0].tickets)
+            .then((tickets: Array<{priceInPennies: number}>) => {
+                setTicketPriceList([]);
+                const tempList = [];
+                for (const ticket of tickets) {
+                    // const ticketPrice = ticket.priceInPennies;
+                    tempList.push(ticket.priceInPennies);
+                }
+                setTicketPriceList(tempList);
+            })
             .catch(error => {
                 alert('Error fetching data:' + error);
-            })
-            .finally(() => console.log(url));
+            });
     };
+
+    // const displayValues = (journeys: string) => {
+    //     console.log(journeys);      
+        
+    // };
 
     const stationList = [
         { id: 'PAD', name: 'Paddington' },
@@ -39,6 +50,7 @@ const Stations: React.FC = () => {
     // let stationChoice: string;
     const [departureStationChoice, setDepartureStationChoices] = useState('PAD');
     const [arrivalStationChoice, setArrivalStationChoices] = useState('PAD');
+    const [ticketPriceList, setTicketPriceList] = useState([] as Array<number>);
 
     // useEffect(() => {
     //  fetchStations()
@@ -50,25 +62,33 @@ const Stations: React.FC = () => {
     // }, []);
 
     return (
-        <div className = "station-wrapper">
-            <div className = "dropdown-selections">
-                <div>
-                    <label htmlFor = "departure stations">Select the departure station: </label>
+        <div>
+            <div className = "station-wrapper">
+                <div className = "dropdown-selections">
+                    <div>
+                        <label htmlFor = "departure stations">Select the departure station: </label>
 
-                    <select value = { departureStationChoice } name = "stations" id = "departure-stations" onChange = { (e) => setDepartureStationChoices(e.target.value) }> 
-                        { stationList.map( (stationObj: {id: string; name: string}, index: number) => (<Station key = { index } id = { stationObj.id } name = { stationObj.name }/>)) }
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor = "arrival stations"> Select the arrival station: </label>
+                        <select value = { departureStationChoice } name = "stations" id = "departure-stations" onChange = { (e) => setDepartureStationChoices(e.target.value) }> 
+                            { stationList.map( (stationObj: {id: string; name: string}, index: number) => (<Station key = { index } id = { stationObj.id } name = { stationObj.name }/>)) }
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor = "arrival stations"> Select the arrival station: </label>
 
-                    <select value = { arrivalStationChoice } name = "stations" id = "arrival-stations" onChange = { (e) => setArrivalStationChoices(e.target.value) }> 
-                        { stationList.map( (stationObj: {id: string; name: string}) => (<Station key = { stationObj.id } id = { stationObj.id } name = { stationObj.name }/>)) }
-                    </select>
+                        <select value = { arrivalStationChoice } name = "stations" id = "arrival-stations" onChange = { (e) => setArrivalStationChoices(e.target.value) }> 
+                            { stationList.map( (stationObj: {id: string; name: string}) => (<Station key = { stationObj.id } id = { stationObj.id } name = { stationObj.name }/>)) }
+                        </select>
+                    </div>
                 </div>
+                <button className = "button" type = "button" id = "submitStation" onClick = { handleOnClick } >Submit</button>
             </div>
-            <button className = "button" type = "button" id = "submitStation" onClick = { handleOnClick } >Submit</button>
+            <div>
+                <ul id = "ticketPrice" className = "scrollable-ul">
+                    { ticketPriceList.map( (price: number, index: number) => (<li key = { index }>{price}</li>)) }
+                </ul>
+            </div>
         </div>
+        
     );
 };
 

@@ -34,25 +34,24 @@ const Stations: React.FC = () => {
     }, []);
 
     return (
-        <div className = "flex-container">
-            <div>
-                <label htmlFor = "departure stations">Select the departure station: </label>
+        <div className = "station-wrapper">
+            <div className = "dropdown-selections">
+                <div>
+                    <label htmlFor = "departure stations">Select the departure station: </label>
 
-                <select value = { departureStationChoice } name = "stations" id = "departure-stations" onChange = { (e) => setDepartureStationChoices(e.target.value) }> 
-                    { stationList.map( (stationObj: {id: string; name: string}, index: number) => (<Station key = { index } id = { stationObj.id } name = { stationObj.name }/>)) }
-                </select>
-            </div>
-            <div>
-                <label htmlFor = "arrival stations"> Select the arrival station: </label>
+                    <select value = { departureStationChoice } name = "stations" id = "departure-stations" onChange = { (e) => setDepartureStationChoices(e.target.value) }> 
+                        { stationList.map( (stationObj: {id: string; name: string}, index: number) => (<Station key = { index } id = { stationObj.id } name = { stationObj.name }/>)) }
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor = "arrival stations"> Select the arrival station: </label>
 
-                <select value = { arrivalStationChoice } name = "stations" id = "arrival-stations" onChange = { (e) => setArrivalStationChoices(e.target.value) }> 
-                    { stationList.map( (stationObj: {id: string; name: string}) => (<Station key = { stationObj.id } id = { stationObj.id } name = { stationObj.name }/>)) }
-                </select>
+                    <select value = { arrivalStationChoice } name = "stations" id = "arrival-stations" onChange = { (e) => setArrivalStationChoices(e.target.value) }> 
+                        { stationList.map( (stationObj: {id: string; name: string}) => (<Station key = { stationObj.id } id = { stationObj.id } name = { stationObj.name }/>)) }
+                    </select>
+                </div>
             </div>
-            <br />
-            <div>
-                <button type = "button" id = "submitStation" onClick = { handleOnClick }>Submit</button>
-            </div>
+            <button className = "button" type = "button" id = "submitStation" onClick = { handleOnClick } >Submit</button>
         </div>
     );
 };

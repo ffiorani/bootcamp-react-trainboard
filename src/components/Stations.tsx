@@ -3,11 +3,29 @@ import { fetchStations } from '../helpers/ApiCallHelper';
 import Station from './Station';
 
 const Stations: React.FC = () => {
+    const getCurrentDate = () => {
+        const datetimeString = (new Date()).toISOString();
+        return datetimeString.substring(0, datetimeString.length-1);
+    };
 
     const handleOnClick = async() => {
-        window.location.href = 'https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/' + 
-        departureStationChoice + '/' +
-        arrivalStationChoice + '/#LiveDepResults';
+        const baseUrl = 'https://mobile-api-softwire2.lner.co.uk/v1/fares?';
+        const trailingUrl = '&noChanges=false&numberOfAdults=1&numberOfChildren=0&journeyType=single&outboundDateTime=' + getCurrentDate() + '&outboundIsArriveBy=false';
+        const url = baseUrl + 'originStation=' + departureStationChoice + '&destinationStation=' + arrivalStationChoice + trailingUrl;
+
+        fetch(url, {
+            headers: {
+                'X-API-KEY': `${process.env.REACT_APP_X_API_KEY}`,
+            }, 
+        })
+            .then(response => response.json())
+            .then(data => data.numberOfChildren)
+            .then(value => alert(value))
+            .then(() => alert(url))
+            .catch(error => {
+                alert('Error fetching data:' + error);
+            })
+            .finally(() => console.log(url));
     };
 
     const stationList = [
@@ -22,12 +40,14 @@ const Stations: React.FC = () => {
     const [departureStationChoice, setDepartureStationChoices] = useState('PAD');
     const [arrivalStationChoice, setArrivalStationChoices] = useState('PAD');
 
-    useEffect(() => {
-        fetchStations()
-            .then((value) => console.log(value))
-            .catch((err) => console.log(err))
-            .finally(() => console.log('finally'));
-    }, []);
+    // useEffect(() => {
+    //  fetchStations()
+    // .then(response => response.json())
+    // .then(list => list.stations[0].id)
+    // .then((value) => alert(value))
+    // .catch((err) => alert(err))
+    // .finally(() => alert('finally'));
+    // }, []);
 
     return (
         <div className = "station-wrapper">

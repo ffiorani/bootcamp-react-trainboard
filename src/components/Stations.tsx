@@ -5,26 +5,22 @@ import Station from './Station';
 const Stations: React.FC = () => {
 
     const handleOnClick = async() => {
-        // https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/EDB/KGX/#LiveDepResults
-        alert(departureStationChoice + arrivalStationChoice);
-    };
-
-    const stationURLs = {
-        Paddington: 'url',
-                            
+        window.location.href = 'https://www.lner.co.uk/travel-information/travelling-now/live-train-times/depart/' + 
+        departureStationChoice + '/' +
+        arrivalStationChoice + '/#LiveDepResults';
     };
 
     const stationList = [
-        { id: 'PDT', name: 'Paddington' },
+        { id: 'PAD', name: 'Paddington' },
         { id: 'LST', name: 'Liverpool Street' },
-        { id: 'KCX', name: 'Kings Cross' },
+        { id: 'KGX', name: 'Kings Cross' },
         { id: 'KTN', name: 'Kentish Town' },
         { id: 'LBG', name: 'London Bridge' },
     ];
 
     // let stationChoice: string;
-    const [departureStationChoice, setDepartureStationChoices] = useState('');
-    const [arrivalStationChoice, setArrivalStationChoices] = useState('');
+    const [departureStationChoice, setDepartureStationChoices] = useState('PAD');
+    const [arrivalStationChoice, setArrivalStationChoices] = useState('PAD');
 
     useEffect(() => {
         fetchStations()

@@ -1,12 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const Station: React.FC = () => {
-    const { id } = useParams();
+export interface StationProps {
+    id: string;
+    name: string;
+}
+
+const Station: React.FC<StationProps> = (attributes) => {
+    // const { id, name } = useParams();
     return (
-        <div>
-            Station {id}!
-        </div>
+        <option value = { attributes.id }>{ attributes.name }</option>
     );
 };
 

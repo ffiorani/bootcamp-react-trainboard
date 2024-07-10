@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { fetchStations } from '../helpers/ApiCallHelper';
+import Station from './Station';
 
 const Stations: React.FC = () => {
 
-    const [allStations, setAllStations] = useState([]);
+    const stationURLs = {
+        Paddington: 'url',
+                            
+    };
+
+    // let stationChoice: string;
+    const [stationChoice, setStationChoices] = useState();
 
     useEffect(() => {
         fetchStations()
@@ -16,7 +23,16 @@ const Stations: React.FC = () => {
 
     return (
         <div>
-            Stations!
+            <label htmlFor = "stations">Select the station: </label>
+
+            <select value = { stationChoice } name = "stations" id = "stations">
+                <Station id = { 'PDT' } name = { 'Paddington' }/>
+                <Station id = { 'LST' } name = { 'Liverpool Street' }/>
+                <Station id = { 'KCX' } name = { 'Kings Cross' }/>
+                <Station id = { 'KTN' } name = { 'Kentish Town' }/>
+                <Station id = { 'LBG' } name = { 'London Bridge' }/>
+            </select>
+            <button type = "button" id = "submitStation">Submit</button>
         </div>
     );
 };

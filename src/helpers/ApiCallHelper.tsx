@@ -1,5 +1,7 @@
+const baseUrl = 'https://mobile-api-softwire2.lner.co.uk/v1/';
+
 export const fetchStations = () => {
-    return fetch('https://mobile-api-softwire2.lner.co.uk/v1/stations', {
+    return fetch(`${baseUrl}stations`, {
         headers: {
             'X-API-KEY': `${process.env.REACT_APP_X_API_KEY}`,
         },
@@ -7,10 +9,8 @@ export const fetchStations = () => {
 };
 
 export const fetchQueryInformation = (params: URLSearchParams) => {
-    const url = `https://mobile-api-softwire2.lner.co.uk/v1/fares?${params}`;
 
-    // const trailingUrl = '&noChanges=false&numberOfAdults=' + params.numberOfAdults +'&numberOfChildren=' + params.numberOfChildren +'&journeyType=single&outboundDateTime=' + getCurrentDate() + '&outboundIsArriveBy=false';
-    // const url = baseUrl + 'originStation=' + params.departureStationChoice + '&destinationStation=' + params.arrivalStationChoice + trailingUrl;
+    const url = `${baseUrl}fares?${params}`;
 
     return fetch(url, {
         headers: {

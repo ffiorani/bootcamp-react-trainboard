@@ -6,10 +6,9 @@ export interface StationProps {
     name: string;
 }
 
-const Station: React.FC<StationProps> = (attributes) => {
-    // const { id, name } = useParams();
+const Station: React.FC<StationProps> = ({ id, name }) => {
     return (
-        <option value = { attributes.id }>{ attributes.name }</option>
+        <option value = { id }>{ name }</option>
     );
 };
 

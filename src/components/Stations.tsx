@@ -1,31 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { fetchStations } from '../helpers/ApiCallHelper';
+import React, { useState } from 'react';
+import { fetchQueryInformation } from '../helpers/ApiCallHelper';
 import Station from './Station';
 
 const Stations: React.FC = () => {
+
     const getCurrentDate = () => {
         const datetimeString = (new Date()).toISOString();
         return datetimeString.substring(0, datetimeString.length-1);
     };
 
     const handleOnClick = async() => {
-        const baseUrl = 'https://mobile-api-softwire2.lner.co.uk/v1/fares?';
-        const trailingUrl = '&noChanges=false&numberOfAdults=1&numberOfChildren=0&journeyType=single&outboundDateTime=' + getCurrentDate() + '&outboundIsArriveBy=false';
-        const url = baseUrl + 'originStation=' + departureStationChoice + '&destinationStation=' + arrivalStationChoice + trailingUrl;
 
-        fetch(url, {
-            headers: {
-                'X-API-KEY': `${process.env.REACT_APP_X_API_KEY}`,
-            }, 
-        })
+        const params = new URLSearchParams({
+            'originStation': departureStationChoice,
+            'destinationStation': arrivalStationChoice,
+            'noChanges': 'false',
+            'numberOfAdults': '1',
+            'numberOfChildren': '0',
+            'journeyType': 'single',
+            'outboundDateTime': getCurrentDate(),
+            'outboundIsArriveBy': 'false',
+        });
+
+        fetchQueryInformation(params)
             .then(response => response.json())
-            .then(data => data.numberOfChildren)
+            .then(data => data.outboundJourneys[0].tickets[0].priceInPennies)
             .then(value => alert(value))
-            .then(() => alert(url))
+            .then(() => alert(params.toString()))
             .catch(error => {
                 alert('Error fetching data:' + error);
             })
-            .finally(() => console.log(url));
+            .finally(() => console.log(params.toString()));
     };
 
     const stationList = [
@@ -36,18 +41,8 @@ const Stations: React.FC = () => {
         { id: 'LBG', name: 'London Bridge' },
     ];
 
-    // let stationChoice: string;
     const [departureStationChoice, setDepartureStationChoices] = useState('PAD');
     const [arrivalStationChoice, setArrivalStationChoices] = useState('PAD');
-
-    // useEffect(() => {
-    //  fetchStations()
-    // .then(response => response.json())
-    // .then(list => list.stations[0].id)
-    // .then((value) => alert(value))
-    // .catch((err) => alert(err))
-    // .finally(() => alert('finally'));
-    // }, []);
 
     return (
         <div className = "station-wrapper">

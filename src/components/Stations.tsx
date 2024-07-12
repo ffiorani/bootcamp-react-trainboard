@@ -55,8 +55,7 @@ const Stations: React.FC = () => {
                         id = "departure-stations"
                         onChange = { (e) => setDepartureStationChoices(e.target.value) }
                     > 
-                        { stationList.map((stationObj:
-                            { id: string; name: string }, index: number) => (
+                        { stationList.map((stationObj, index) => (
                             <Station
                                 key = { index }
                                 id = { stationObj.id }
@@ -73,10 +72,9 @@ const Stations: React.FC = () => {
                         id = "arrival-stations" 
                         onChange = { (e) => setArrivalStationChoices(e.target.value) }
                     > 
-                        { stationList.map( (stationObj: 
-                            { id: string; name: string }) => (
+                        { stationList.map( (stationObj, index) => (
                             <Station 
-                                key = { stationObj.id } 
+                                key = { index } 
                                 id = { stationObj.id } 
                                 name = { stationObj.name }
                             /> 

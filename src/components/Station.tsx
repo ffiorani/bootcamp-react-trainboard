@@ -1,14 +1,20 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { MenuItem } from '@mui/material';
 
 export interface StationProps {
-    id: string;
-    name: string;
+    key: number;
+    value: string;
+    label: string;
 }
 
-const Station: React.FC<StationProps> = ({ id, name }) => {
+const Station = ({ key, value, label }: StationProps) => {
     return (
-        <option value = { id }>{ name }</option>
+        <MenuItem 
+            key = { key } 
+            value = { value }
+        >
+            { label }
+        </MenuItem>
     );
 };
 

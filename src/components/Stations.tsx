@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Box, FormControl, InputLabel, MenuItem } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { fetchQueryInformation } from '../helpers/ApiCallHelper';
 import Station from './Station';
 
@@ -34,52 +36,72 @@ const Stations: React.FC = () => {
     };
 
     const stationList = [
-        { id: 'PAD', name: 'Paddington' },
-        { id: 'LST', name: 'Liverpool Street' },
-        { id: 'KGX', name: 'Kings Cross' },
-        { id: 'KTN', name: 'Kentish Town' },
-        { id: 'LBG', name: 'London Bridge' },
-    ];
+        { value: 'PAD', label: 'Paddington' },
+        { value: 'LST', label: 'Liverpool Street' },
+        { value: 'KGX', label: 'Kings Cross' },
+        { value: 'KTN', label: 'Kentish Town' },
+        { value: 'LBG', label: 'London Bridge' },
+    ] as Array<{value: string; label: string}>;
 
-    const [departureStationChoice, setDepartureStationChoices] = useState('PAD');
-    const [arrivalStationChoice, setArrivalStationChoices] = useState('PAD');
+    const [departureStationChoice, setDepartureStationChoices] = useState('');
+    const [arrivalStationChoice, setArrivalStationChoices] = useState('');
+
+    const handleChange = (event: SelectChangeEvent) => {
+        setDepartureStationChoices(event.target.value as string);
+    };
 
     return (
         <div className = "station-wrapper">
             <div className = "dropdown-selections">
                 <div>
-                    <label htmlFor = "departure stations">Select the departure station: </label>
+                    <Box sx = { { minWidth: 180 } }>
+                        <FormControl fullWidth>
+                            <InputLabel id = "departure-stations-label" >Departure station</InputLabel>
 
-                    <select
-                        value = { departureStationChoice }
-                        id = "departure-stations"
-                        onChange = { (e) => setDepartureStationChoices(e.target.value) }
-                    > 
-                        { stationList.map((stationObj, index) => (
-                            <Station
-                                key = { index }
-                                id = { stationObj.id }
-                                name = { stationObj.name }
-                            />
-                        )) }
-                    </select>
+                            <Select
+                                labelId = "departure-stations-label"
+                                id = "departure-stations"
+                                value = { departureStationChoice }
+                                label = "Departure station"
+                                onChange = { (e: SelectChangeEvent) => (setDepartureStationChoices(e.target.value as string)) }
+                            > 
+                                { stationList.map((stationObj, index) => (
+                                    // Station({ key: index, value: stationObj.value, label: stationObj.label })
+                                    <MenuItem 
+                                        key = { index } 
+                                        value = { stationObj.value }
+                                    >
+                                        { stationObj.label }
+                                    </MenuItem>
+                                )) }
+                            </Select>
+                        </FormControl>
+                    </Box>
+
                 </div>
                 <div>
-                    <label htmlFor = "arrival stations"> Select the arrival station: </label>
+                    <Box sx = { { minWidth: 180 } }>
+                        <FormControl fullWidth>
+                            <InputLabel id = "arrival-stations-label" >Arrival station</InputLabel>
 
-                    <select 
-                        value = { arrivalStationChoice } 
-                        id = "arrival-stations" 
-                        onChange = { (e) => setArrivalStationChoices(e.target.value) }
-                    > 
-                        { stationList.map( (stationObj, index) => (
-                            <Station 
-                                key = { index } 
-                                id = { stationObj.id } 
-                                name = { stationObj.name }
-                            /> 
-                        )) }
-                    </select>
+                            <Select
+                                labelId = "arrival-stations-label"
+                                id = "arrival-stations"
+                                value = { arrivalStationChoice }
+                                label = "Arrival station"
+                                onChange = { (e) => (setArrivalStationChoices(e.target.value as string)) }
+                            > 
+                                { stationList.map((stationObj, index) => (
+                                    <MenuItem 
+                                        key = { index } 
+                                        value = { stationObj.value }
+                                    >
+                                        { stationObj.label }
+                                    </MenuItem>
+                                )) }
+                            </Select>
+                        </FormControl>
+                    </Box>
                 </div>
             </div>
             <button

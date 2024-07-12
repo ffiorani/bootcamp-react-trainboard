@@ -9,8 +9,6 @@ const App = () => (
         <div className = "App">
             <Routes>
                 <Route path = "/stations">
-                    <Route path = ":id" element = { <Station id = 'Paddington' name = 'Paddington'/> }/>
-       
                     <Route index element = { <Stations/> }/>
                 </Route>
             </Routes>

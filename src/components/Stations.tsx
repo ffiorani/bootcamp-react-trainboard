@@ -50,19 +50,47 @@ const Stations: React.FC = () => {
                 <div>
                     <label htmlFor = "departure stations">Select the departure station: </label>
 
-                    <select value = { departureStationChoice } id = "departure-stations" onChange = { (e) => setDepartureStationChoices(e.target.value) }> 
-                        { stationList.map( (stationObj: {id: string; name: string}, index: number) => (<Station key = { index } id = { stationObj.id } name = { stationObj.name }/>)) }
+                    <select
+                        value = { departureStationChoice }
+                        id = "departure-stations"
+                        onChange = { (e) => setDepartureStationChoices(e.target.value) }
+                    > 
+                        { stationList.map((stationObj:
+                            { id: string; name: string }, index: number) => (
+                            <Station
+                                key = { index }
+                                id = { stationObj.id }
+                                name = { stationObj.name }
+                            />
+                        )) }
                     </select>
                 </div>
                 <div>
                     <label htmlFor = "arrival stations"> Select the arrival station: </label>
 
-                    <select value = { arrivalStationChoice } id = "arrival-stations" onChange = { (e) => setArrivalStationChoices(e.target.value) }> 
-                        { stationList.map( (stationObj: {id: string; name: string}) => (<Station key = { stationObj.id } id = { stationObj.id } name = { stationObj.name }/>)) }
+                    <select 
+                        value = { arrivalStationChoice } 
+                        id = "arrival-stations" 
+                        onChange = { (e) => setArrivalStationChoices(e.target.value) }
+                    > 
+                        { stationList.map( (stationObj: 
+                            { id: string; name: string }) => (
+                            <Station 
+                                key = { stationObj.id } 
+                                id = { stationObj.id } 
+                                name = { stationObj.name }
+                            /> 
+                        )) }
                     </select>
                 </div>
             </div>
-            <button className = "button" type = "button" onClick = { handleOnClick } >Submit</button>
+            <button
+                className = "button" 
+                type = "button"
+                onClick = { handleOnClick }
+            >
+                Submit
+            </button>
         </div>
     );
 };
